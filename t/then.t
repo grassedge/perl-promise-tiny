@@ -6,7 +6,7 @@ use parent qw(Test::Class);
 use AnyEvent;
 use Test::More;
 
-use_ok 'Promise::Tiny';
+use Promise::Tiny;
 
 sub then_success : Tests {
     my $test_value = 'first';

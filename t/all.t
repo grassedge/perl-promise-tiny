@@ -7,7 +7,7 @@ use Test::Fatal qw(exception);
 use Test::More;
 
 use AnyEvent;
-use_ok "Promise::Tiny::AnyEvent";
+use Promise::Tiny::AnyEvent;
 
 sub all : Tests {
     my $p1 = Promise::Tiny::AnyEvent->new(sub {
