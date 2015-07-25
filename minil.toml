@@ -1,5 +1,4 @@
 name = "Promise-Tiny"
-authority = "cpan:HATZ"
 # badges = ["travis"]
 module_maker="ModuleBuildTiny"
 
