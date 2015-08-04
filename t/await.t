@@ -6,10 +6,10 @@ use parent qw(Test::Class);
 use Test::Fatal qw(exception);
 use Test::More;
 
-use Promise::Tiny::AnyEvent;
+use Promise::Tiny::AnyEvent qw(promise);
 
 sub await : Tests {
-    my $promise = Promise::Tiny::AnyEvent->new(sub {
+    my $promise = promise(sub {
         my ($resolve, $reject) = @_;
         $resolve->(123);
     });
@@ -19,7 +19,7 @@ sub await : Tests {
 }
 
 sub reject_await : Tests {
-    my $promise = Promise::Tiny::AnyEvent->new(sub {
+    my $promise = promise(sub {
         my ($resolve, $reject) = @_;
         $reject->({ message => 'oh my god' });
     });
@@ -29,7 +29,7 @@ sub reject_await : Tests {
 }
 
 sub exception_await : Tests {
-    my $promise = Promise::Tiny::AnyEvent->new(sub {
+    my $promise = promise(sub {
         my ($resolve, $reject) = @_;
         die { message => 'oh my god' };
     });
@@ -39,7 +39,7 @@ sub exception_await : Tests {
 }
 
 sub then_await : Tests {
-    my $promise = Promise::Tiny::AnyEvent->new(sub {
+    my $promise = promise(sub {
         my ($resolve, $reject) = @_;
         $resolve->(123);
     })->then(sub {
@@ -52,7 +52,7 @@ sub then_await : Tests {
 }
 
 sub await_with_async : Tests {
-    my $promise = Promise::Tiny::AnyEvent->new(sub {
+    my $promise = promise(sub {
         my ($resolve, $reject) = @_;
         my $w; $w = AnyEvent->timer(
             after => 0.1,
@@ -68,7 +68,7 @@ sub await_with_async : Tests {
 }
 
 sub then_await_with_async : Tests {
-    my $promise = Promise::Tiny::AnyEvent->new(sub {
+    my $promise = promise(sub {
         my ($resolve, $reject) = @_;
         my $w; $w = AnyEvent->timer(
             after => 0.1,
@@ -79,7 +79,7 @@ sub then_await_with_async : Tests {
         );
     })->then(sub {
         my ($value) = @_;
-        return Promise::Tiny::AnyEvent->new(sub {
+        return promise(sub {
             my ($resolve, $reject) = @_;
             my $w; $w = AnyEvent->timer(
                 after => 0.1,

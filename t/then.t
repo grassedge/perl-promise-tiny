@@ -6,13 +6,13 @@ use parent qw(Test::Class);
 use AnyEvent;
 use Test::More;
 
-use Promise::Tiny;
+use Promise::Tiny qw(promise);
 
 sub then_success : Tests {
     my $test_value = 'first';
 
     my $cv = AnyEvent->condvar;
-    Promise::Tiny->new(sub {
+    promise(sub {
         my ($resolve, $reject) = @_;
         my $w; $w = AnyEvent->timer(
             after => 0.1,
@@ -36,7 +36,7 @@ sub then_success : Tests {
         is $test_value, 'third';
         $test_value = 'forth';
 
-        return Promise::Tiny->new(sub {
+        return promise(sub {
             my ($resolve, $reject) = @_;
             my $w; $w = AnyEvent->timer(
                 after => 0.1,
@@ -60,7 +60,7 @@ sub then_success_with_no_handler : Tests {
     my $test_value = 'first';
 
     my $cv = AnyEvent->condvar;
-    Promise::Tiny->new(sub {
+    promise(sub {
         my ($resolve, $reject) = @_;
         my $w; $w = AnyEvent->timer(
             after => 0.1,
@@ -78,7 +78,7 @@ sub then_success_with_no_handler : Tests {
 
 sub already_resolved : Tests {
     my $called = 0;
-    my $p = Promise::Tiny->new(sub {
+    my $p = promise(sub {
         my ($resolve, $reject) = @_;
         $resolve->('executed');
     })->then(sub {

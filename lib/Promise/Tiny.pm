@@ -6,6 +6,13 @@ use warnings;
 our $VERSION = "0.01";
 
 use Scalar::Util qw(blessed);
+use Exporter qw(import);
+
+our @EXPORT_OK = qw(promise);
+
+sub promise {
+    return __PACKAGE__->new(@_);
+}
 
 #### constructor ####
 

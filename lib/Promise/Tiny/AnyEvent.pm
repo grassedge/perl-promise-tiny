@@ -4,6 +4,13 @@ use warnings;
 
 use parent 'Promise::Tiny';
 use AnyEvent;
+use Exporter qw(import);
+
+our @EXPORT_OK = qw(promise);
+
+sub promise {
+    return __PACKAGE__->new(@_);
+}
 
 sub await {
     my ($self) = @_;
