@@ -11,9 +11,9 @@ Promise::Tiny - A promise implementation written in Perl
         some_async_process(..., sub { # callback.
             ...
             if ($error) {
-                $reject($error);
+                $reject->($error);
             } else {
-                $resolve('success value');
+                $resolve->('success value');
             }
         });
     })->then(sub {

@@ -66,6 +66,5 @@
          "web" : "https://github.com/hatz48/perl-promise-tiny"
       }
    },
-   "version" : "0.01",
-   "x_authority" : "cpan:HATZ"
+   "version" : "0.02"
 }
