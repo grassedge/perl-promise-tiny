@@ -39,7 +39,7 @@ sub _resolve {
         $self->{_fulfilled} = 1;
         $self->{_fulfilled_value} = $value;
         if ($self->{on_fulfilled}) {
-            $self->{on_fulfilled}->($value);
+            $_->($value) for splice @{ $self->{on_fulfilled} };
         }
     }
 }
@@ -49,8 +49,9 @@ sub _reject {
     unless ($self->{_fulfilled} || $self->{_rejected}) {
         $self->{_rejected} = 1;
         $self->{_rejected_reason} = $reason;
+
         if ($self->{on_rejected}) {
-            $self->{on_rejected}->($reason);
+            $_->($reason) for splice @{ $self->{on_rejected} };
         }
     }
 }
@@ -83,15 +84,16 @@ sub then {
         };
 
         if ($on_fulfilled) {
-            $self->{on_fulfilled} = $handler_wrapper->($on_fulfilled);
+            push @{ $self->{on_fulfilled} }, $handler_wrapper->($on_fulfilled);
+
             if ($self->{_fulfilled}) {
-                $self->{on_fulfilled}->($self->{_fulfilled_value});
+                $_->($self->{_fulfilled_value}) for splice @{ $self->{on_fulfilled} };
             }
         }
         if ($on_rejected) {
-            $self->{on_rejected} = $handler_wrapper->($on_rejected);
+            push @{ $self->{on_rejected} }, $handler_wrapper->($on_rejected);
             if ($self->{_rejected}) {
-                $self->{on_rejected}->($self->{_rejected_reason});
+                $_->($self->{_rejected_reason}) for splice @{ $self->{on_rejected} };
             }
         }
     });
