@@ -4,25 +4,27 @@ Promise::Tiny - A promise implementation written in Perl
 
 # SYNOPSIS
 
-    use Promise::Tiny;
+```perl
+use Promise::Tiny;
 
-    my $promise = Promise::Tiny->new(sub {
-        my ($resolve, $reject) = @_;
-        some_async_process(..., sub { # callback.
-            ...
-            if ($error) {
-                $reject->($error);
-            } else {
-                $resolve->('success value');
-            }
-        });
-    })->then(sub {
-        my ($value) = @_;
-        print $value # -> success value
-    }, sub {
-        my ($error) = @_;
-        # handle error
+my $promise = Promise::Tiny->new(sub {
+    my ($resolve, $reject) = @_;
+    some_async_process(..., sub { # callback.
+        ...
+        if ($error) {
+            $reject->($error);
+        } else {
+            $resolve->('success value');
+        }
     });
+})->then(sub {
+    my ($value) = @_;
+    print $value # -> success value
+}, sub {
+    my ($error) = @_;
+    # handle error
+});
+```
 
 # DESCRIPTION
 
