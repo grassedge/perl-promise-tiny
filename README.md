@@ -1,3 +1,5 @@
+This module is no longer maintained. Use https://github.com/FGasper/p5-Promise-ES6 instead.
+
 # NAME
 
 Promise::Tiny - A promise implementation written in Perl
